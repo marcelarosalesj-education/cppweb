@@ -49,7 +49,7 @@ heroku open -a <app name given by heroku>
 ```
 After this, you will be able to access the `<app name given by heroku>`.heroku.com (or something like that) to see your application.
 
-## Databases with MongoDB Atlas
+## Databases with MongoDB Atlas - Load JSON
 * Use MongoDB Atlas.
   * Create a Cluster. Note that the name cannot be changed later.
   * Setup which IPs can access the cluster (for this example all of them)
@@ -72,13 +72,28 @@ I couldn't make the `mongoimport --host` command work, and the uri version was n
 mongoimport --uri "mongodb+srv://<user>:<password>@<cluster>/<database>"  -c <collection> --drop --file <file>.json --jsonArray
 ```
 
-### To connect to your database you need the mongodb cpp driver
+## To connect to your database you need the mongodb cpp driver
 
-Build the container using
+Build the bbox container to build mongodb-c-driver and mongodb-cpp-driver.
 ```
 cd hello_crow/bbox
 docker build --rm --squash --no-cache -t bbox:latest .
 ```
+After this step you'll have a new image, `bbox:latest`, that has the mongodb drivers required.
+
+Now you need to update the `hello_crow/Dockerfile` to use this new image. Re-build that image too.
+```
+cd hello_crow
+docker build --rm --squash --no-cache -t hello_crow:latest .
+```
+We will add to `hello_crow/main.cpp` functionality to use the `<database>` that we loaded in the last section. The CMakeList and Dockerfile were modified as a result of this.
+
+Then, we build that image (this will compile our application and link it with mongodb-cpp-driver libraries) and launch the app.
+```
+docker build --rm --squash --no-cache -t hello_crow:latest .
+docker run -p 8080:8080 -e PORT=8080 -e MONGODB_URI="mongodb+srv://<user>:<password>@<cluster>/<database>" hello_crow:latest
+```
+Go to heroku's container, on the Settings tab click on `Config Vars`. There you will add this ` MONGODB_URI="mongodb+srv://<user>:<password>@<cluster>/<database>"`.
 
 
 
