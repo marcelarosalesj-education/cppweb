@@ -1,2 +1,5 @@
 my_commands.md
 hello_crow/build/*
+.DS_Store
+.vscode/
+hello_crow/.DS_Store
