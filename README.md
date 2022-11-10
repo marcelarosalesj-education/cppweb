@@ -98,5 +98,6 @@ Go to heroku's container, on the Settings tab click on `Config Vars`. There you 
 
 
 ## Resources
+* This content was done following Linkedin Learning course [Web Servers and APIs using C++](https://www.linkedin.com/learning/web-servers-and-apis-using-c-plus-plus)
 * [MongoDB Atlas mongoimport issues cannot decode array into a D](https://stackoverflow.com/questions/58150528/mongodb-atlas-mongoimport-issues-cannot-decode-array-into-a-d)
 * [Load File with mongoimport](https://docs.atlas.mongodb.com/import/mongoimport)
